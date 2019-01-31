@@ -125,11 +125,13 @@ String File::readString()
 {
     String ret;
     ret.reserve(size() - position());
-	int c  = read();
-	while (c >= 0)
+    char temp[256+1];
+    int countRead = readBytes(temp, sizeof(temp)-1);
+    while (countRead > 0)
     {
-        ret += (char) c;
-		c = read();
+        temp[countRead] = 0;
+        ret += temp;
+        countRead = readBytes(temp, sizeof(temp)-1);
     }
     return ret;
 }
